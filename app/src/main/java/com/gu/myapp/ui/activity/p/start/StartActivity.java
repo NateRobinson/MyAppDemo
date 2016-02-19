@@ -20,7 +20,7 @@ public class StartActivity extends MyAppBaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case GO_TO_HOME:
-                    go(HomeActivity.class);
+                    goThenKill(HomeActivity.class);
                     break;
                 default:
                     break;

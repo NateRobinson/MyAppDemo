@@ -2,41 +2,68 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/grey_mid"
     android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/bottom_tab_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:focusable="false"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.gu.baselibrary.view.PicCenterRadioButton
+            android:id="@+id/tab_one_bottom"
+            style="@style/HomeBottomRadio"
+            android:background="@drawable/one_tab_bg"
+            android:checked="true" />
+
+        <com.gu.baselibrary.view.PicCenterRadioButton
+            android:id="@+id/tab_two_bottom"
+            style="@style/HomeBottomRadio"
+            android:background="@drawable/two_tab_bg" />
+
+        <com.gu.baselibrary.view.PicCenterRadioButton
+            android:id="@+id/tab_three_bottom"
+            style="@style/HomeBottomRadio"
+            android:background="@drawable/three_tab_bg" />
+
+        <com.gu.baselibrary.view.PicCenterRadioButton
+            android:id="@+id/tab_four_bottom"
+            style="@style/HomeBottomRadio"
+            android:background="@drawable/four_tab_bg" />
+    </RadioGroup>
 
     <RadioGroup
         android:id="@+id/bottom_tab"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="horizontal">
 
         <com.gu.baselibrary.view.PicCenterRadioButton
-            android:id="@+id/rad_one"
+            android:id="@+id/tab_one"
             style="@style/HomeBottomRadio"
-            android:background="@color/blue"
-            android:button="@mipmap/one_tab"
-            android:checked="true" />
+            android:checked="true"
+            android:drawableTop="@drawable/one_tab_icon" />
 
         <com.gu.baselibrary.view.PicCenterRadioButton
-            android:id="@+id/rad_two"
+            android:id="@+id/tab_two"
             style="@style/HomeBottomRadio"
-            android:background="@color/pink_txt"
-            android:button="@mipmap/one_tab" />
+            android:drawableTop="@drawable/two_tab_icon"/>
 
         <com.gu.baselibrary.view.PicCenterRadioButton
-            android:id="@+id/rad_three"
+            android:id="@+id/tab_three"
             style="@style/HomeBottomRadio"
-            android:background="@color/orange_txt"
-            android:button="@mipmap/one_tab" />
+            android:drawableTop="@drawable/three_tab_icon" />
 
         <com.gu.baselibrary.view.PicCenterRadioButton
-            android:id="@+id/rad_four"
+            android:id="@+id/tab_four"
             style="@style/HomeBottomRadio"
-            android:background="@color/red_press"
-            android:button="@mipmap/one_tab" />
+            android:drawableTop="@drawable/four_tab_icon"/>
     </RadioGroup>
 
     <com.gu.baselibrary.view.NoScrollViewPager

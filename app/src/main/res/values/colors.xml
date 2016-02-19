@@ -17,4 +17,9 @@
     <color name="blue">#359bff</color>
     <color name="red">#CD0000</color>
     <color name="red_press">#A52A2A</color>
+    <color name="one_bg">#FF5845</color>
+    <color name="two_bg">#31D16D</color>
+    <color name="three_bg">#FCBA1D</color>
+    <color name="four_bg">#31D16D</color>
+
 </resources>
