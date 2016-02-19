@@ -3,6 +3,7 @@ package com.gu.myapp.ui.frgment.v.home;
 import android.support.v7.widget.Toolbar;
 
 import com.gu.baselibrary.baseui.view.AppDelegate;
+import com.gu.myapp.R;
 
 /**
  * Created by guxuewu on 2016/2/19.
@@ -14,7 +15,7 @@ public class OneFragmentView extends AppDelegate {
      */
     @Override
     public int getRootLayoutId() {
-        return 0;
+        return R.layout.frag_home_one;
     }
 
     /**

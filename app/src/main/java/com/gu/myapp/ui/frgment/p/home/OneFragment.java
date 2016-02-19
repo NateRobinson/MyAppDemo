@@ -1,6 +1,7 @@
 package com.gu.myapp.ui.frgment.p.home;
 
 import com.gu.myapp.ui.base.MyAppBaseFragment;
+import com.gu.myapp.ui.frgment.v.home.OneFragmentView;
 
 /**
  * Created by guxuewu on 2016/2/19.
@@ -9,7 +10,7 @@ import com.gu.myapp.ui.base.MyAppBaseFragment;
 public class OneFragment extends MyAppBaseFragment {
     @Override
     protected Class getDelegateClass() {
-        return null;
+        return OneFragmentView.class;
     }
 
     /**
