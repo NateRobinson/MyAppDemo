@@ -9,7 +9,7 @@ import com.gu.myapp.R;
  * Created by guxuewu on 2016/2/19.
  * 首页 第二个 碎片 view 控制类
  */
-public class TwoFragmentView extends AppDelegate{
+public class TwoFragmentView extends AppDelegate {
     /**
      * @return 返回root视图的id
      */
@@ -23,7 +23,6 @@ public class TwoFragmentView extends AppDelegate{
      */
     @Override
     public void initWidget() {
-
     }
 
     /**
@@ -41,4 +40,5 @@ public class TwoFragmentView extends AppDelegate{
     public Toolbar getToolbar() {
         return null;
     }
+
 }

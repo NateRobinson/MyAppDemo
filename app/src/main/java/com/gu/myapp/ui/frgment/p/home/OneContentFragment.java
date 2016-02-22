@@ -1,19 +1,26 @@
 package com.gu.myapp.ui.frgment.p.home;
 
-import com.gu.baselibrary.baseui.presenter.BaseFragmentPresenter;
-import com.gu.myapp.ui.frgment.v.home.TwoFragmentView;
+import android.os.Bundle;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.gu.baselibrary.baseui.presenter.BaseFragmentPresenter;
+import com.gu.myapp.ui.frgment.v.home.OneContentFragmentView;
 
 /**
- * Created by guxuewu on 2016/2/19.
- * 首页第二个 碎片
+ * Created by Nate on 2016/2/22.
  */
-public class TwoFragment extends BaseFragmentPresenter<TwoFragmentView> {
+public class OneContentFragment extends BaseFragmentPresenter<OneContentFragmentView> {
+
+    public static OneContentFragment getOneContentFragment(String num) {
+        Bundle args = new Bundle();
+        args.putString("num", num);
+        OneContentFragment fragment = new OneContentFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     protected Class getDelegateClass() {
-        return TwoFragmentView.class;
+        return OneContentFragmentView.class;
     }
 
     /**
@@ -53,5 +60,10 @@ public class TwoFragment extends BaseFragmentPresenter<TwoFragmentView> {
      */
     @Override
     protected void initViewsAndEvents() {
+        viewDelegate.setText(getTitle());
+    }
+
+    public String getTitle() {
+        return getArguments().getString("num");
     }
 }

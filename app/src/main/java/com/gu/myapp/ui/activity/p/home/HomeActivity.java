@@ -2,15 +2,15 @@ package com.gu.myapp.ui.activity.p.home;
 
 import android.os.Bundle;
 
+import com.gu.baselibrary.baseui.presenter.BaseActivityPresenter;
 import com.gu.baselibrary.utils.NetUtils;
 import com.gu.myapp.ui.activity.v.home.HomeActivityView;
-import com.gu.myapp.ui.base.MyAppBaseActivity;
 
 /**
  * Created by guxuewu on 2016/2/19.
  * app 首页
  */
-public class HomeActivity extends MyAppBaseActivity {
+public class HomeActivity extends BaseActivityPresenter<HomeActivityView> {
     /**
      * @return 获取自定义的视图层代理
      */

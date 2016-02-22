@@ -1,13 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="one"
-        android:textSize="30sp" />
-</LinearLayout>
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <com.gu.baselibrary.view.dragtoplayout.DragTopLayout
+            android:id="@+id/drag_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--top view-->
+            <LinearLayout
+                android:id="@+id/top_view"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:animateLayoutChanges="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="40dp"
+                    android:text="Top View"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <!--content view-->
+            <LinearLayout
+                android:id="@+id/drag_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.gu.baselibrary.view.verticalviewpager.VerticalViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
+
+                </com.gu.baselibrary.view.verticalviewpager.VerticalViewPager>
+
+            </LinearLayout>
+        </com.gu.baselibrary.view.dragtoplayout.DragTopLayout>
+    </RelativeLayout>
+</RelativeLayout>

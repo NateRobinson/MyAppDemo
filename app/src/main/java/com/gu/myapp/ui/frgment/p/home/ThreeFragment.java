@@ -1,13 +1,13 @@
 package com.gu.myapp.ui.frgment.p.home;
 
-import com.gu.myapp.ui.base.MyAppBaseFragment;
+import com.gu.baselibrary.baseui.presenter.BaseFragmentPresenter;
 import com.gu.myapp.ui.frgment.v.home.ThreeFragmentView;
 
 /**
  * Created by guxuewu on 2016/2/19.
  * 首页 第三个 碎片
  */
-public class ThreeFragment extends MyAppBaseFragment {
+public class ThreeFragment extends BaseFragmentPresenter<ThreeFragmentView> {
     @Override
     protected Class getDelegateClass() {
         return ThreeFragmentView.class;

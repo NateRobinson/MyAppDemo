@@ -104,7 +104,7 @@ public abstract class BaseActivityPresenter<T extends IDelegate> extends AppComp
         //拿到初始化以后的rootview，并设置content
         setContentView(viewDelegate.getRootView());
         // 是否全屏应用
-        setTranslucentStatus();
+        //setTranslucentStatus();
         //设置tag名字为当前class名
         TAG_LOG = this.getClass().getSimpleName();
         // 页面堆栈管理

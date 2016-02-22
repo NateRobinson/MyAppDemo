@@ -4,16 +4,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.gu.baselibrary.baseui.presenter.BaseActivityPresenter;
 import com.gu.baselibrary.utils.NetUtils;
 import com.gu.myapp.ui.activity.p.home.HomeActivity;
 import com.gu.myapp.ui.activity.v.start.StartActivityView;
-import com.gu.myapp.ui.base.MyAppBaseActivity;
 
 /**
  * Created by guxuewu on 2016/2/19.
  * app 启动页面
  */
-public class StartActivity extends MyAppBaseActivity {
+public class StartActivity extends BaseActivityPresenter<StartActivityView> {
     private static final int GO_TO_HOME = 0;
     private Handler handler = new Handler() {
         @Override
