@@ -134,7 +134,7 @@ public class DragTopLayout extends FrameLayout {
         super.onFinishInflate();
 
 
-        contentTop=ScreenUtils.dp2px(getContext(),300);
+//        contentTop=ScreenUtils.dp2px(getContext(),300);
         if (getChildCount() < 2) {
             throw new RuntimeException("Content view must contains two child views at least.");
         }
@@ -180,18 +180,18 @@ public class DragTopLayout extends FrameLayout {
         super.onLayout(changed, left, top, right, bottom);
         dragRange = getHeight();
 
-        if(contentTop>=ScreenUtils.dp2px(getContext(),50)){
+//        if(contentTop>=ScreenUtils.dp2px(getContext(),50)){
 
-            // In case of resetting the content top to target position before sliding.
-            int contentTopTemp = contentTop;
-            resetTopViewHeight();
-            resetContentHeight();
+        // In case of resetting the content top to target position before sliding.
+        int contentTopTemp = contentTop;
+        resetTopViewHeight();
+        resetContentHeight();
 
-            topView.layout(left, Math.min(topView.getPaddingTop(), contentTop - topViewHeight), right,
-                    contentTop);
-            dragContentView.layout(left, contentTopTemp, right,
-                    contentTopTemp + dragContentView.getHeight());
-        }
+        topView.layout(left, Math.min(topView.getPaddingTop(), contentTop - topViewHeight), right,
+                contentTop);
+        dragContentView.layout(left, contentTopTemp, right,
+                contentTopTemp + dragContentView.getHeight());
+//        }
 
     }
 
@@ -322,7 +322,8 @@ public class DragTopLayout extends FrameLayout {
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             super.onViewPositionChanged(changedView, left, top, dx, dy);
-            if (isDrag && top >= ScreenUtils.dp2px(getContext(), 50)) {
+//            if (isDrag && top >= ScreenUtils.dp2px(getContext(), 50)) {
+            if (isDrag) {
                 contentTop = top;
                 requestLayout();
                 calculateRatio(contentTop);
@@ -337,7 +338,8 @@ public class DragTopLayout extends FrameLayout {
 
         @Override
         public int clampViewPositionVertical(View child, int top, int dy) {
-            if (isDrag && top >= ScreenUtils.dp2px(getContext(), 50)) {
+//            if (isDrag && top >= ScreenUtils.dp2px(getContext(), 50)) {
+            if (isDrag) {
                 if (overDrag) {
                     // Drag over the top view height.
                     return Math.max(top, getPaddingTop() + collapseOffset);
@@ -353,7 +355,8 @@ public class DragTopLayout extends FrameLayout {
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             super.onViewReleased(releasedChild, xvel, yvel);
-            if (isDrag && contentTop >= ScreenUtils.dp2px(getContext(), 50)) {
+//            if (isDrag && contentTop >= ScreenUtils.dp2px(getContext(), 50)) {
+            if (isDrag) {
                 // yvel > 0 Fling down || yvel < 0 Fling up
                 int top;
                 if (yvel > 0 || contentTop > topViewHeight) {
