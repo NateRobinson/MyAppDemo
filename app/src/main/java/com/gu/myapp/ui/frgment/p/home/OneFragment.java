@@ -57,11 +57,5 @@ public class OneFragment extends BaseFragmentPresenter<OneFragmentView> {
      */
     @Override
     protected void initViewsAndEvents() {
-        viewDelegate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewDelegate.showToast("点击事件测试");
-            }
-        }, R.id.test_btn);
     }
 }

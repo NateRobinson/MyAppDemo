@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.gu.baselibrary.R;
+import com.gu.baselibrary.utils.LogUtils;
 import com.gu.baselibrary.utils.ScreenUtils;
 
 /**
@@ -39,11 +40,11 @@ import com.gu.baselibrary.utils.ScreenUtils;
 public class DragTopLayout extends FrameLayout {
 
     private ViewDragHelper dragHelper;
-    private int dragRange;
-    private View dragContentView;
-    private View topView;
+    private int dragRange;//拖拽范围
+    private View dragContentView;//内容布局
+    private View topView;//顶部的视图
 
-    private int contentTop;
+    private int contentTop;//顶部布局的top值
     private int topViewHeight;
     private float ratio;
     private boolean isRefreshing;
@@ -61,15 +62,13 @@ public class DragTopLayout extends FrameLayout {
     private boolean dispatchingChildrenDownFaked = false;
     private boolean dispatchingChildrenContentView = false;
     private float dispatchingChildrenStartedAtY = Float.MAX_VALUE;
-
     private PanelState panelState = PanelState.EXPANDED;
-
 
     public enum PanelState {
 
-        COLLAPSED(0),
-        EXPANDED(1),
-        SLIDING(2);
+        COLLAPSED(0),//关闭
+        EXPANDED(1),//展开
+        SLIDING(2);//滑行
 
         private int asInt;
 
@@ -112,7 +111,7 @@ public class DragTopLayout extends FrameLayout {
         dragHelper = ViewDragHelper.create(this, 1.0f, callback);
         // init from attrs
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DragTopLayout);
-        setCollapseOffset(a.getDimensionPixelSize(R.styleable.DragTopLayout_dtlCollapseOffset, collapseOffset));
+        //setCollapseOffset(a.getDimensionPixelSize(R.styleable.DragTopLayout_dtlCollapseOffset, collapseOffset));
         overDrag = a.getBoolean(R.styleable.DragTopLayout_dtlOverDrag, overDrag);
         dragContentViewId = a.getResourceId(R.styleable.DragTopLayout_dtlDragContentView, -1);
         topViewId = a.getResourceId(R.styleable.DragTopLayout_dtlTopView, -1);
@@ -121,6 +120,11 @@ public class DragTopLayout extends FrameLayout {
         a.recycle();
     }
 
+    /**
+     * 初始化打开与关闭
+     *
+     * @param initOpen
+     */
     private void initOpen(boolean initOpen) {
         if (initOpen) {
             panelState = PanelState.EXPANDED;
@@ -132,9 +136,8 @@ public class DragTopLayout extends FrameLayout {
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
-
-
-//        contentTop=ScreenUtils.dp2px(getContext(),300);
+        //初始化contenttop的高度
+        contentTop = ScreenUtils.dp2px(getContext(), 250);
         if (getChildCount() < 2) {
             throw new RuntimeException("Content view must contains two child views at least.");
         }
@@ -180,28 +183,28 @@ public class DragTopLayout extends FrameLayout {
         super.onLayout(changed, left, top, right, bottom);
         dragRange = getHeight();
 
-//        if(contentTop>=ScreenUtils.dp2px(getContext(),50)){
-
         // In case of resetting the content top to target position before sliding.
-        int contentTopTemp = contentTop;
         resetTopViewHeight();
         resetContentHeight();
 
-        topView.layout(left, Math.min(topView.getPaddingTop(), contentTop - topViewHeight), right,
-                contentTop);
-        dragContentView.layout(left, contentTopTemp, right,
-                contentTopTemp + dragContentView.getHeight());
-//        }
+        topView.layout(left, Math.min(topView.getPaddingTop(), contentTop - topViewHeight) >= 0 ? Math.min(topView.getPaddingTop(), contentTop - topViewHeight) : 0, right,
+                contentTop + ScreenUtils.dp2px(getContext(), 50));
+        dragContentView.layout(left, contentTop, right,
+                contentTop + dragContentView.getHeight());
 
     }
 
+    /**
+     * 重置顶部视图
+     */
     private void resetTopViewHeight() {
         int newTopHeight = topView.getHeight();
         // Top layout is changed
         if (topViewHeight != newTopHeight) {
             if (panelState == PanelState.EXPANDED) {
-                contentTop = newTopHeight;
-                handleSlide(newTopHeight);
+                //第一次的contenttop就是在这边赋值的
+                //contentTop = newTopHeight;
+                handleSlide(contentTop);
             } else if (panelState == PanelState.COLLAPSED) {
                 // update the drag content top when it is collapsed.
                 contentTop = collapseOffset;
@@ -210,10 +213,13 @@ public class DragTopLayout extends FrameLayout {
         }
     }
 
+    /**
+     * 重置内容高度
+     */
     private void resetContentHeight() {
         if (dragContentView != null && dragContentView.getHeight() != 0) {
             ViewGroup.LayoutParams layoutParams = dragContentView.getLayoutParams();
-            layoutParams.height = getHeight() - collapseOffset;
+            layoutParams.height = getHeight() - collapseOffset - ScreenUtils.dp2px(getContext(), 54);
             dragContentView.setLayoutParams(layoutParams);
         }
     }
@@ -239,7 +245,7 @@ public class DragTopLayout extends FrameLayout {
     }
 
     private void calculateRatio(float top) {
-        ratio = (top - collapseOffset) / (topViewHeight - collapseOffset);
+        ratio = (top - collapseOffset - ScreenUtils.dp2px(getContext(), 54)) / (ScreenUtils.dp2px(getContext(), 196) - collapseOffset);
         if (dispatchingChildrenContentView) {
             resetDispatchingContentView();
         }
@@ -254,6 +260,9 @@ public class DragTopLayout extends FrameLayout {
         }
     }
 
+    /**
+     * 更新dragtoplayout状态，根据contenttop的值来判断
+     */
     private void updatePanelState() {
         if (contentTop <= getPaddingTop() + collapseOffset) {
             panelState = PanelState.COLLAPSED;
@@ -306,6 +315,8 @@ public class DragTopLayout extends FrameLayout {
             //这里有个Bug,当isDrag从false变为true是，mDragHelper的mCallBack在
             //首次滑动时不响应，再次滑动才响应，自能在此调用下，让mDragHelper恢复下状态
             dragHelper.abort();
+        } else {
+            contentTop = ScreenUtils.dp2px(getContext(), 54);
         }
     }
 
@@ -319,11 +330,19 @@ public class DragTopLayout extends FrameLayout {
             return child == dragContentView;
         }
 
+        /**
+         * 正在滚动，滚动没有完成
+         * @param changedView
+         * @param left
+         * @param top
+         * @param dx
+         * @param dy
+         */
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             super.onViewPositionChanged(changedView, left, top, dx, dy);
-//            if (isDrag && top >= ScreenUtils.dp2px(getContext(), 50)) {
-            if (isDrag) {
+            //可以滚动，并且这个top大于54dp，才可以执行
+            if (isDrag && top > ScreenUtils.dp2px(getContext(), 54)) {
                 contentTop = top;
                 requestLayout();
                 calculateRatio(contentTop);
@@ -338,31 +357,43 @@ public class DragTopLayout extends FrameLayout {
 
         @Override
         public int clampViewPositionVertical(View child, int top, int dy) {
-//            if (isDrag && top >= ScreenUtils.dp2px(getContext(), 50)) {
+            //如果已经到了顶部菜单栏，就不可以滑动
             if (isDrag) {
-                if (overDrag) {
-                    // Drag over the top view height.
-                    return Math.max(top, getPaddingTop() + collapseOffset);
+                if (top > ScreenUtils.dp2px(getContext(), 54)) {
+                    if (overDrag) {
+                        // Drag over the top view height.
+                        return Math.max(top, getPaddingTop() + collapseOffset);
+                    } else {
+                        //我使用到的是这个
+                        return Math.min(ScreenUtils.dp2px(getContext(), 250), Math.max(top, getPaddingTop() + collapseOffset));
+                    }
                 } else {
-                    return Math.min(topViewHeight, Math.max(top, getPaddingTop() + collapseOffset));
+                    return ScreenUtils.dp2px(getContext(), 54);
                 }
             } else {
-                return 0;
+                contentTop = ScreenUtils.dp2px(getContext(), 54);
+                return ScreenUtils.dp2px(getContext(), 54);
             }
 
         }
 
+        /**
+         * 滚动结束
+         * @param releasedChild
+         * @param xvel
+         * @param yvel
+         */
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             super.onViewReleased(releasedChild, xvel, yvel);
-//            if (isDrag && contentTop >= ScreenUtils.dp2px(getContext(), 50)) {
-            if (isDrag) {
+            if (isDrag && contentTop > ScreenUtils.dp2px(getContext(), 54)) {
                 // yvel > 0 Fling down || yvel < 0 Fling up
                 int top;
                 if (yvel > 0 || contentTop > topViewHeight) {
-                    top = topViewHeight + getPaddingTop();
+                    top = ScreenUtils.dp2px(getContext(), 250) + getPaddingTop();
                 } else {
-                    top = getPaddingTop() + collapseOffset;
+                    //留下顶部的菜单栏
+                    top = getPaddingTop() + collapseOffset + ScreenUtils.dp2px(getContext(), 54);
                 }
                 dragHelper.settleCapturedViewAt(releasedChild.getLeft(), top);
                 postInvalidate();
@@ -386,7 +417,6 @@ public class DragTopLayout extends FrameLayout {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         try {
-
             boolean intercept = shouldIntercept && dragHelper.shouldInterceptTouchEvent(ev);
             return intercept;
         } catch (NullPointerException e) {
@@ -438,15 +468,6 @@ public class DragTopLayout extends FrameLayout {
         dispatchingChildrenStartedAtY = Float.MAX_VALUE;
     }
 
-
-    //================
-    // public
-    //================
-
-    public PanelState getState() {
-        return panelState;
-    }
-
     public void openTopView(boolean anim) {
         // Before created
         if (dragContentView.getHeight() == 0) {
@@ -470,169 +491,26 @@ public class DragTopLayout extends FrameLayout {
         }
     }
 
-    public void updateTopViewHeight(int height) {
-        ViewGroup.LayoutParams layoutParams = topView.getLayoutParams();
-        layoutParams.height = height;
-        topView.setLayoutParams(layoutParams);
-    }
-
-    public void toggleTopView() {
-        toggleTopView(false);
-    }
-
-    public void toggleTopView(boolean touchMode) {
-        switch (panelState) {
-            case COLLAPSED:
-                openTopView(true);
-                if (touchMode) {
-                    setTouchMode(true);
-                }
-                break;
-            case EXPANDED:
-                closeTopView(true);
-                if (touchMode) {
-                    setTouchMode(false);
-                }
-                break;
-        }
-    }
-
-    public DragTopLayout setTouchMode(boolean shouldIntercept) {
-        this.shouldIntercept = shouldIntercept;
-        return this;
-    }
-
-    /**
-     * Setup the drag listener.
-     *
-     * @return SetupWizard
-     */
-    public DragTopLayout listener(PanelListener panelListener) {
-        this.panelListener = panelListener;
-        return this;
-    }
-
-    /**
-     * Set the refresh position while dragging you want.
-     * The default value is 1.5f.
-     *
-     * @return SetupWizard
-     */
-    public DragTopLayout setRefreshRatio(float ratio) {
-        this.refreshRatio = ratio;
-        return this;
-    }
-
-    /**
-     * Set enable drag over.
-     * The default value is true.
-     *
-     * @return SetupWizard
-     */
-    public DragTopLayout setOverDrag(boolean overDrag) {
-        this.overDrag = overDrag;
-        return this;
-    }
-
-    /**
-     * Set the content view. Pass the id of the view (R.id.xxxxx).
-     * This one will be set as the content view and will be dragged together with the topView
-     *
-     * @param id The id (R.id.xxxxx) of the content view.
-     * @return
-     */
-    public DragTopLayout setDragContentViewId(int id) {
-        this.dragContentViewId = id;
-        return this;
-    }
-
-    /**
-     * Set the top view. The top view is the header view that will be dragged out.
-     * Pass the id of the view (R.id.xxxxx)
-     *
-     * @param id The id (R.id.xxxxx) of the top view
-     * @return
-     */
-    public DragTopLayout setTopViewId(int id) {
-        this.topViewId = id;
-        return this;
-    }
-
-    public boolean isOverDrag() {
-        return overDrag;
-    }
-
-    /**
-     * Get refresh state
-     */
-    public boolean isRefreshing() {
-        return isRefreshing;
-    }
-
-    public void setRefreshing(boolean isRefreshing) {
-        this.isRefreshing = isRefreshing;
-    }
-
-    /**
-     * Complete refresh and reset the refresh state.
-     */
-    public void onRefreshComplete() {
-        isRefreshing = false;
-    }
-
-    /**
-     * Set the collapse offset
-     *
-     * @return SetupWizard
-     */
-    public DragTopLayout setCollapseOffset(int px) {
-        collapseOffset = px;
-        resetContentHeight();
-        return this;
-    }
-
-    public int getCollapseOffset() {
-        return collapseOffset;
-    }
-
-
-    // ---------------------
-
     public interface PanelListener {
         /**
          * Called while the panel state is changed.
          */
-        public void onPanelStateChanged(PanelState panelState);
+        void onPanelStateChanged(PanelState panelState);
 
         /**
          * Called while dragging.
          * ratio >= 0.
          */
-        public void onSliding(float ratio);
+        void onSliding(float ratio);
 
         /**
          * Called while the ratio over refreshRatio.
          */
-        public void onRefresh();
+        void onRefresh();
     }
 
-    public static class SimplePanelListener implements PanelListener {
-
-        @Override
-        public void onPanelStateChanged(PanelState panelState) {
-
-        }
-
-        @Override
-        public void onSliding(float ratio) {
-
-        }
-
-        @Deprecated
-        @Override
-        public void onRefresh() {
-
-        }
+    public void setPanelListener(PanelListener listener) {
+        this.panelListener = listener;
     }
 
     /**

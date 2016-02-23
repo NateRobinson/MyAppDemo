@@ -3,14 +3,21 @@ package com.gu.myapp.ui.frgment.v.home;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.gu.baselibrary.baseui.view.AppDelegate;
+import com.gu.baselibrary.utils.LogUtils;
 import com.gu.baselibrary.view.dragtoplayout.DragTopLayout;
 import com.gu.baselibrary.view.verticalviewpager.StackTransformer;
 import com.gu.myapp.R;
 import com.gu.myapp.ui.activity.p.home.HomeActivity;
 import com.gu.myapp.ui.adapter.ContentFragmentAdapter;
 import com.gu.myapp.ui.frgment.p.home.OneContentFragment;
+import com.nineoldandroids.view.ViewHelper;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by guxuewu on 2016/2/19.
@@ -19,6 +26,11 @@ import com.gu.myapp.ui.frgment.p.home.OneContentFragment;
 public class OneFragmentView extends AppDelegate {
     private DragTopLayout dragLayout;
     private ViewPager viewPager;
+    private View titleBgView;
+    private LinearLayout top_view;
+    private ImageView refresh_iv;
+    private ImageView mail_iv;
+    private TextView title_tv;
 
     /**
      * @return 返回root视图的id
@@ -35,6 +47,13 @@ public class OneFragmentView extends AppDelegate {
     public void initWidget() {
         dragLayout = get(R.id.drag_layout);
         viewPager = get(R.id.view_pager);
+        titleBgView = get(R.id.title_bg_view);
+        top_view = get(R.id.top_view);
+        refresh_iv = get(R.id.refresh_iv);
+        mail_iv = get(R.id.mail_iv);
+        title_tv = get(R.id.title_tv);
+
+        initTitleBg();
         viewPager.setPageTransformer(true, new StackTransformer());
         viewPager.setAdapter(new ContentFragmentAdapter.Holder(((HomeActivity) getActivity()).getSupportFragmentManager())
                 .add(OneContentFragment.getOneContentFragment("1"))
@@ -68,6 +87,45 @@ public class OneFragmentView extends AppDelegate {
 
             }
         });
+
+        dragLayout.setPanelListener(new DragTopLayout.PanelListener() {
+            @Override
+            public void onPanelStateChanged(DragTopLayout.PanelState panelState) {
+
+            }
+
+            @Override
+            public void onSliding(float ratio) {
+                LogUtils.e(TAG, "ratio==>" + ratio);
+                ViewHelper.setAlpha(titleBgView, 1 - ratio);
+                ViewHelper.setAlpha(top_view, ratio);
+                if (ratio < 0.2) {
+                    //关闭
+                    refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
+                    mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
+                    title_tv.setTextColor(getActivity().getResources().getColor(R.color.red));
+                } else {
+                    // 打开
+                    refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
+                    mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
+                    title_tv.setTextColor(getActivity().getResources().getColor(R.color.white));
+                }
+            }
+
+            @Override
+            public void onRefresh() {
+
+            }
+        });
+    }
+
+    private void initTitleBg() {
+        ViewHelper.setAlpha(titleBgView, 0);
+        ViewHelper.setAlpha(top_view, 1);
+        // 打开
+        refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
+        mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
+        title_tv.setTextColor(getActivity().getResources().getColor(R.color.white));
     }
 
     /**

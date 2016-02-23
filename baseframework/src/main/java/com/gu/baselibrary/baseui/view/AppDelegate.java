@@ -35,12 +35,15 @@ import com.gu.baselibrary.utils.Toastor;
  */
 public abstract class AppDelegate implements IDelegate {
 
+    protected static String TAG = "";
+
     protected final SparseArray<View> mViews = new SparseArray<View>();
     protected View rootView = null;
 
     @Override
     public void create(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         int rootLayoutId = getRootLayoutId();
+        TAG = getClass().getSimpleName();
         if (rootView == null) {
             rootView = inflater.inflate(rootLayoutId, container, false);
         }
