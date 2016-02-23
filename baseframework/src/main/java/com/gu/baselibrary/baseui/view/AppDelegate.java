@@ -99,7 +99,7 @@ public abstract class AppDelegate implements IDelegate {
      *
      * @param msg
      */
-    protected void showToast(String msg) {
+    public void showToast(String msg) {
         if (!TextUtils.isEmpty(msg)) {
             new Toastor(rootView.getContext()).showSingletonToast(msg);
         }
@@ -110,7 +110,7 @@ public abstract class AppDelegate implements IDelegate {
      *
      * @param msgId
      */
-    protected void showToast(int msgId) {
+    public void showToast(int msgId) {
         new Toastor(rootView.getContext()).showSingletonToast(msgId);
     }
 

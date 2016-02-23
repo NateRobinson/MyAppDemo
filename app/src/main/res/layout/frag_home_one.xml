@@ -28,13 +28,13 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <Button
+                    android:id="@+id/test_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="40dp"
-                    android:text="Top View"
+                    android:layout_margin="10dp"
+                    android:text="Test Click"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 

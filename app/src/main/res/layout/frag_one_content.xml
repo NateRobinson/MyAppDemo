@@ -10,8 +10,10 @@
         android:id="@+id/content_num_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
         android:gravity="center"
         android:text="one"
         android:textColor="@color/white"
         android:textSize="30sp" />
+
 </LinearLayout>

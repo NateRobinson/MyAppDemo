@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.gu.baselibrary.R;
+import com.gu.baselibrary.utils.ScreenUtils;
 
 /**
  * Created by chenupt@gmail.com on 2015/1/18.
@@ -50,11 +51,11 @@ public class DragTopLayout extends FrameLayout {
 
     private PanelListener panelListener;
     private float refreshRatio = 1.5f;
-    private boolean overDrag = true;
-    private int collapseOffset;
+    private boolean overDrag = false;//是否可以有拉伸效果
+    private int collapseOffset;//自定义偏移量
     private int topViewId = -1;
     private int dragContentViewId = -1;
-    private boolean captureTop = true;
+    private boolean captureTop = false;//设置顶部布局是否监听viewdraghelper
 
     // Used for scrolling
     private boolean dispatchingChildrenDownFaked = false;
@@ -64,7 +65,7 @@ public class DragTopLayout extends FrameLayout {
     private PanelState panelState = PanelState.EXPANDED;
 
 
-    public static enum PanelState {
+    public enum PanelState {
 
         COLLAPSED(0),
         EXPANDED(1),
@@ -109,7 +110,6 @@ public class DragTopLayout extends FrameLayout {
 
     private void init(AttributeSet attrs) {
         dragHelper = ViewDragHelper.create(this, 1.0f, callback);
-
         // init from attrs
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DragTopLayout);
         setCollapseOffset(a.getDimensionPixelSize(R.styleable.DragTopLayout_dtlCollapseOffset, collapseOffset));
@@ -117,7 +117,7 @@ public class DragTopLayout extends FrameLayout {
         dragContentViewId = a.getResourceId(R.styleable.DragTopLayout_dtlDragContentView, -1);
         topViewId = a.getResourceId(R.styleable.DragTopLayout_dtlTopView, -1);
         initOpen(a.getBoolean(R.styleable.DragTopLayout_dtlOpen, true));
-        captureTop = a.getBoolean(R.styleable.DragTopLayout_dtlCaptureTop, true);
+        captureTop = a.getBoolean(R.styleable.DragTopLayout_dtlCaptureTop, false);
         a.recycle();
     }
 
@@ -133,6 +133,8 @@ public class DragTopLayout extends FrameLayout {
     public void onFinishInflate() {
         super.onFinishInflate();
 
+
+        contentTop=ScreenUtils.dp2px(getContext(),300);
         if (getChildCount() < 2) {
             throw new RuntimeException("Content view must contains two child views at least.");
         }
@@ -178,15 +180,19 @@ public class DragTopLayout extends FrameLayout {
         super.onLayout(changed, left, top, right, bottom);
         dragRange = getHeight();
 
-        // In case of resetting the content top to target position before sliding.
-        int contentTopTemp = contentTop;
-        resetTopViewHeight();
-        resetContentHeight();
+        if(contentTop>=ScreenUtils.dp2px(getContext(),50)){
 
-        topView.layout(left, Math.min(topView.getPaddingTop(), contentTop - topViewHeight), right,
-                contentTop);
-        dragContentView.layout(left, contentTopTemp, right,
-                contentTopTemp + dragContentView.getHeight());
+            // In case of resetting the content top to target position before sliding.
+            int contentTopTemp = contentTop;
+            resetTopViewHeight();
+            resetContentHeight();
+
+            topView.layout(left, Math.min(topView.getPaddingTop(), contentTop - topViewHeight), right,
+                    contentTop);
+            dragContentView.layout(left, contentTopTemp, right,
+                    contentTopTemp + dragContentView.getHeight());
+        }
+
     }
 
     private void resetTopViewHeight() {
@@ -316,7 +322,7 @@ public class DragTopLayout extends FrameLayout {
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             super.onViewPositionChanged(changedView, left, top, dx, dy);
-            if (isDrag) {
+            if (isDrag && top >= ScreenUtils.dp2px(getContext(), 50)) {
                 contentTop = top;
                 requestLayout();
                 calculateRatio(contentTop);
@@ -331,14 +337,14 @@ public class DragTopLayout extends FrameLayout {
 
         @Override
         public int clampViewPositionVertical(View child, int top, int dy) {
-            if(isDrag){
+            if (isDrag && top >= ScreenUtils.dp2px(getContext(), 50)) {
                 if (overDrag) {
                     // Drag over the top view height.
                     return Math.max(top, getPaddingTop() + collapseOffset);
                 } else {
                     return Math.min(topViewHeight, Math.max(top, getPaddingTop() + collapseOffset));
                 }
-            }else{
+            } else {
                 return 0;
             }
 
@@ -347,7 +353,7 @@ public class DragTopLayout extends FrameLayout {
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             super.onViewReleased(releasedChild, xvel, yvel);
-            if (isDrag) {
+            if (isDrag && contentTop >= ScreenUtils.dp2px(getContext(), 50)) {
                 // yvel > 0 Fling down || yvel < 0 Fling up
                 int top;
                 if (yvel > 0 || contentTop > topViewHeight) {
