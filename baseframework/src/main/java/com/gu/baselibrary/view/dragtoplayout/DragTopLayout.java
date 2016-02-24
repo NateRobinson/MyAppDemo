@@ -264,9 +264,9 @@ public class DragTopLayout extends FrameLayout {
      * 更新dragtoplayout状态，根据contenttop的值来判断
      */
     private void updatePanelState() {
-        if (contentTop <= getPaddingTop() + collapseOffset) {
+        if (contentTop <= getPaddingTop() + collapseOffset + ScreenUtils.dp2px(getContext(), 60)) {
             panelState = PanelState.COLLAPSED;
-        } else if (contentTop >= topView.getHeight()) {
+        } else if (contentTop >= ScreenUtils.dp2px(getContext(), 250)) {
             panelState = PanelState.EXPANDED;
         } else {
             panelState = PanelState.SLIDING;
@@ -389,9 +389,15 @@ public class DragTopLayout extends FrameLayout {
             if (isDrag && contentTop > ScreenUtils.dp2px(getContext(), 54)) {
                 // yvel > 0 Fling down || yvel < 0 Fling up
                 int top;
-                if (yvel > 0 || contentTop > topViewHeight) {
+                if (yvel > 0 || contentTop > ScreenUtils.dp2px(getContext(), 250)) {
+                    if (panelListener != null) {
+                        panelListener.onPanelStateChanged(PanelState.EXPANDED);
+                    }
                     top = ScreenUtils.dp2px(getContext(), 250) + getPaddingTop();
                 } else {
+                    if (panelListener != null) {
+                        panelListener.onPanelStateChanged(PanelState.COLLAPSED);
+                    }
                     //留下顶部的菜单栏
                     top = getPaddingTop() + collapseOffset + ScreenUtils.dp2px(getContext(), 54);
                 }

@@ -77,6 +77,12 @@ public class OneFragmentView extends AppDelegate {
                         dragLayout.setDrag(true);
                         break;
                     default:
+                        //如果不在position 0  那么一定为关闭状态---防止用户快速滑动，出现界面展示bug
+                        ViewHelper.setAlpha(titleBgView, 1);
+                        ViewHelper.setAlpha(top_view, 0);
+                        refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
+                        mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
+                        title_tv.setTextColor(getActivity().getResources().getColor(R.color.red));
                         dragLayout.setDrag(false);
                         break;
                 }
@@ -91,7 +97,16 @@ public class OneFragmentView extends AppDelegate {
         dragLayout.setPanelListener(new DragTopLayout.PanelListener() {
             @Override
             public void onPanelStateChanged(DragTopLayout.PanelState panelState) {
-
+                switch (panelState) {
+                    case COLLAPSED:
+                        //关闭
+                        dragClose();
+                        break;
+                    case EXPANDED:
+                        // 打开
+                        dragOpen();
+                        break;
+                }
             }
 
             @Override
@@ -99,17 +114,6 @@ public class OneFragmentView extends AppDelegate {
                 LogUtils.e(TAG, "ratio==>" + ratio);
                 ViewHelper.setAlpha(titleBgView, 1 - ratio);
                 ViewHelper.setAlpha(top_view, ratio);
-                if (ratio < 0.2) {
-                    //关闭
-                    refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
-                    mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
-                    title_tv.setTextColor(getActivity().getResources().getColor(R.color.red));
-                } else {
-                    // 打开
-                    refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
-                    mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
-                    title_tv.setTextColor(getActivity().getResources().getColor(R.color.white));
-                }
             }
 
             @Override
@@ -120,12 +124,8 @@ public class OneFragmentView extends AppDelegate {
     }
 
     private void initTitleBg() {
-        ViewHelper.setAlpha(titleBgView, 0);
-        ViewHelper.setAlpha(top_view, 1);
-        // 打开
-        refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
-        mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
-        title_tv.setTextColor(getActivity().getResources().getColor(R.color.white));
+        // 打开---初始化状态
+        dragOpen();
     }
 
     /**
@@ -142,5 +142,27 @@ public class OneFragmentView extends AppDelegate {
     @Override
     public Toolbar getToolbar() {
         return null;
+    }
+
+    /**
+     * 关闭
+     */
+    private void dragClose() {
+        ViewHelper.setAlpha(titleBgView, 1);
+        ViewHelper.setAlpha(top_view, 0);
+        refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
+        mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
+        title_tv.setTextColor(getActivity().getResources().getColor(R.color.red));
+    }
+
+    /**
+     * 打开
+     */
+    private void dragOpen() {
+        ViewHelper.setAlpha(titleBgView, 0);
+        ViewHelper.setAlpha(top_view, 1);
+        refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
+        mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
+        title_tv.setTextColor(getActivity().getResources().getColor(R.color.white));
     }
 }
