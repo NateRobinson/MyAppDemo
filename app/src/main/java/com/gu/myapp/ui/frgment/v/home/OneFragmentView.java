@@ -78,11 +78,7 @@ public class OneFragmentView extends AppDelegate {
                         break;
                     default:
                         //如果不在position 0  那么一定为关闭状态---防止用户快速滑动，出现界面展示bug
-                        ViewHelper.setAlpha(titleBgView, 1);
-                        ViewHelper.setAlpha(top_view, 0);
-                        refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
-                        mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
-                        title_tv.setTextColor(getActivity().getResources().getColor(R.color.red));
+                        dragClose();
                         dragLayout.setDrag(false);
                         break;
                 }
