@@ -70,7 +70,7 @@ public class OneFragment extends BaseFragmentPresenter<OneFragmentView> {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.refresh_iv:
-                        viewDelegate.showToast("点击了刷新");
+                        viewDelegate.onRefresh();
                         break;
                     case R.id.mail_iv:
                         viewDelegate.showToast("点击了消息");

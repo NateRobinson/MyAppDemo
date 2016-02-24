@@ -15,17 +15,63 @@
             android:id="@+id/content_ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-
-            <TextView
-                android:id="@+id/content_num_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="one"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/fudan_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="@dimen/left_margin_normal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextView16_balck"
+                        android:text="复旦大学新闻网" />
+
+                    <TextView
+                        style="@style/TextView12_gray"
+                        android:text="校园头条  刚刚更新" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="@dimen/top_margin_big"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/test03" />
+
+            <com.gu.baselibrary.view.TextViewEllipseEndFixed
+                style="@style/TextView14_balck"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/top_margin_normal"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="10"
+                android:paddingBottom="10dp"
+                android:singleLine="false"
+                android:text="  校园网网络系统从结构层次上分为核心层、汇聚层和接入层；从功能上基本可分为校园网络中心、教学子网、办公子网、宿舍区子网、图书馆子网等。根据校园网用户数量的多少和网络应用的情况，可以分为大型校园网、中型校园网、小型校园网三种。基于上述校园网的特点，我们在设计校园网络时必须充分考虑网络的先进性、标准化和开放性、可靠性和可用性、灵活性和兼容性、实用性和经济性、安全性和保密性、扩展性和网络的灵活性等特性，充分利用有限的投资，建设一个性价比比较高的综合性网络。
+随着经济的发展和国家科教兴国战略的实施，校园网络建设已逐步成为学校的基础建设项目，更成为衡量一个学校教育信息化、现代化的重要标志。目前，大多数有条件的学校已完成了校园网硬件工程建设。然后，多年来都对校园网的认识不够全面，甚至存在很大的误区。例如：认为网络建设越高档越好，在建设中盲目追求高投入，对校园网络建设的建设缺乏综合规划及开发应用；认为建好了校园网络，连接了Internet，就等于实现了教学和办公的自动化和信息化，而缺乏对校园网络的综合管理、技术人员和教师的应用培训，缺乏对教学资源的开发与积累等等。所有这些，都极大地阻碍了校园网络在学校管理、教育教学中所应发挥的实际效益。" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"></LinearLayout>
 
         </LinearLayout>
 

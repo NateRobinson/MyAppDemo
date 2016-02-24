@@ -4,6 +4,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.gu.baselibrary.baseui.view.AppDelegate;
 import com.gu.baselibrary.utils.LogUtils;
+import com.gu.baselibrary.view.FixedSpeedScroller;
 import com.gu.baselibrary.view.MyPagerGalleryView;
 import com.gu.baselibrary.view.dragtoplayout.DragTopLayout;
 import com.gu.baselibrary.view.verticalviewpager.StackTransformer;
@@ -22,6 +24,7 @@ import com.nineoldandroids.view.ViewHelper;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -196,5 +199,9 @@ public class OneFragmentView extends AppDelegate {
      */
     public void bindClick(MyPagerGalleryView.MyOnItemClickListener listener) {
         pagerGalleryView.setMyOnItemClickListener(listener);
+    }
+
+    public void onRefresh() {
+        viewPager.setCurrentItem(0);
     }
 }
