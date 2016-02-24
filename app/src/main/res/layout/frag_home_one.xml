@@ -41,10 +41,6 @@
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="15dp"
                     android:background="@color/transparent">
 
                 </com.gu.baselibrary.view.verticalviewpager.VerticalViewPager>

@@ -63,6 +63,9 @@ public class OneContentFragmentView extends AppDelegate {
             case "4":
                 content_ll.setBackgroundColor(Color.GREEN);
                 break;
+            case "5":
+                content_ll.setBackgroundColor(Color.DKGRAY);
+                break;
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.gu.myapp.ui.frgment.v.home;
 
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -107,7 +108,6 @@ public class OneFragmentView extends AppDelegate {
 
             @Override
             public void onSliding(float ratio) {
-                LogUtils.e(TAG, "ratio==>" + ratio);
                 ViewHelper.setAlpha(titleBgView, 1 - ratio);
                 ViewHelper.setAlpha(top_view, ratio);
             }
