@@ -6,10 +6,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gu.baselibrary.baseui.view.AppDelegate;
 import com.gu.baselibrary.utils.LogUtils;
+import com.gu.baselibrary.view.MyPagerGalleryView;
 import com.gu.baselibrary.view.dragtoplayout.DragTopLayout;
 import com.gu.baselibrary.view.verticalviewpager.StackTransformer;
 import com.gu.myapp.R;
@@ -20,6 +22,9 @@ import com.nineoldandroids.view.ViewHelper;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by guxuewu on 2016/2/19.
  * 首页 第一个 碎片 view 控制类
@@ -28,10 +33,21 @@ public class OneFragmentView extends AppDelegate {
     private DragTopLayout dragLayout;
     private ViewPager viewPager;
     private View titleBgView;
-    private LinearLayout top_view;
+    private RelativeLayout top_view;
     private ImageView refresh_iv;
     private ImageView mail_iv;
     private TextView title_tv;
+    private MyPagerGalleryView pagerGalleryView;
+    private LinearLayout homeAdOvalLl;
+    /**
+     * 图片id的数组,本地测试用
+     */
+    private int[] imageId = new int[]{R.mipmap.test01, R.mipmap.test02, R.mipmap.test03};
+
+    /**
+     * 图片网络路径数组
+     */
+    private List<String> urlImageList = new ArrayList<>();
 
     /**
      * @return 返回root视图的id
@@ -53,8 +69,21 @@ public class OneFragmentView extends AppDelegate {
         refresh_iv = get(R.id.refresh_iv);
         mail_iv = get(R.id.mail_iv);
         title_tv = get(R.id.title_tv);
+        pagerGalleryView = get(R.id.home_ad_gv);
+        homeAdOvalLl = get(R.id.home_ad_oval_ll);
+
+        //初始化无限广告图
+        // 第二和第三参数 2选1 ,参数2为 图片网络路径数组 ,参数3为图片id的数组,本地测试用
+        // ,2个参数都有优先采用 参数2
+        pagerGalleryView.start(getActivity()
+                        .getApplicationContext(), null,
+                imageId, 3000, homeAdOvalLl,
+                R.drawable.dot_focused,
+                R.drawable.dot_normal);
+        pagerGalleryView.startTimer();
 
         initTitleBg();
+
         viewPager.setPageTransformer(true, new StackTransformer());
         viewPager.setAdapter(new ContentFragmentAdapter.Holder(((HomeActivity) getActivity()).getSupportFragmentManager())
                 .add(OneContentFragment.getOneContentFragment("1"))
@@ -160,5 +189,12 @@ public class OneFragmentView extends AppDelegate {
         refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
         mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.white));
         title_tv.setTextColor(getActivity().getResources().getColor(R.color.white));
+    }
+
+    /**
+     * 广告点击监听绑定
+     */
+    public void bindClick(MyPagerGalleryView.MyOnItemClickListener listener) {
+        pagerGalleryView.setMyOnItemClickListener(listener);
     }
 }

@@ -135,7 +135,7 @@ public class MyPagerGalleryView extends Gallery
      * 初始化图片组
      */
     private void ininImages() {
-        listImgs = new ArrayList<ImageView>(); // 图片组
+        listImgs = new ArrayList<>(); // 图片组
         int len = mUris != null ? mUris.length : mAdsId.length;// 优先采用网络图片
         for (int i = 0; i < len; i++) {
             ImageView imageview = new ImageView(mContext); // 实例化ImageView的对象
