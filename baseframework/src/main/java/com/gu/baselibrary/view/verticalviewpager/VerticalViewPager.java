@@ -42,6 +42,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
+import com.gu.baselibrary.utils.LogUtils;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1390,6 +1392,7 @@ public class VerticalViewPager extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final int count = getChildCount();
+        LogUtils.e(TAG,"pageSize===>"+count);
         int width = r - l;
         int height = b - t;
         int paddingLeft = getPaddingLeft();

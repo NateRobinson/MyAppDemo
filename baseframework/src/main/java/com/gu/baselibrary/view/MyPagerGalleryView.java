@@ -170,13 +170,15 @@ public class MyPagerGalleryView extends Gallery
                     Ovalheight, Ovalheight);
             layoutParams.setMargins(Ovalmargin, 0, Ovalmargin, 4);
             for (int i = 0; i < listImgs.size(); i++) {
-                View v = new View(mContext); // 员点
+                PointerView v = new PointerView(mContext); // 员点
                 v.setLayoutParams(layoutParams);
-                v.setBackgroundResource(mNormalId);
+                //v.setBackgroundResource(mNormalId);
+                v.setIndex(i);
+                v.setSelected(false);
                 mOvalLayout.addView(v);
             }
             // 选中第一个
-            mOvalLayout.getChildAt(0).setBackgroundResource(mFocusedId);
+            ((PointerView)mOvalLayout.getChildAt(0)).setSelected(true);
         }
     }
 
@@ -252,8 +254,8 @@ public class MyPagerGalleryView extends Gallery
                                long arg3) {
         curIndex = position % listImgs.size();
         if (mOvalLayout != null && listImgs.size() > 1) { // 切换圆点
-            mOvalLayout.getChildAt(oldIndex).setBackgroundResource(mNormalId); // 圆点取消
-            mOvalLayout.getChildAt(curIndex).setBackgroundResource(mFocusedId);// 圆点选中
+            mOvalLayout.getChildAt(oldIndex).setSelected(false); // 圆点取消
+            mOvalLayout.getChildAt(curIndex).setSelected(true);// 圆点选中
             oldIndex = curIndex;
         }
     }
