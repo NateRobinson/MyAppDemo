@@ -1,5 +1,6 @@
 package com.gu.myapp.ui.frgment.v.home;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,10 +12,9 @@ import android.widget.TextView;
 import com.gu.baselibrary.baseui.view.AppDelegate;
 import com.gu.baselibrary.view.MyPagerGalleryView;
 import com.gu.baselibrary.view.dragtoplayout.DragTopLayout;
-import com.gu.baselibrary.view.verticalviewpager.VerticalViewPager;
 import com.gu.baselibrary.view.verticalviewpager.VerticalStackTransformer;
+import com.gu.baselibrary.view.verticalviewpager.VerticalViewPager;
 import com.gu.myapp.R;
-import com.gu.myapp.ui.activity.p.home.HomeActivity;
 import com.gu.myapp.ui.adapter.ContentFragmentAdapter;
 import com.gu.myapp.ui.frgment.p.home.OneContentFragment;
 import com.nineoldandroids.view.ViewHelper;
@@ -80,42 +80,6 @@ public class OneFragmentView extends AppDelegate {
         pagerGalleryView.startTimer();
 
         initTitleBg();
-
-        viewPager.setPageTransformer(true, new VerticalStackTransformer());
-        viewPager.setAdapter(new ContentFragmentAdapter.Holder(((HomeActivity) getActivity()).getSupportFragmentManager())
-                .add(OneContentFragment.getOneContentFragment("1"))
-                .add(OneContentFragment.getOneContentFragment("2"))
-                .add(OneContentFragment.getOneContentFragment("3"))
-                .add(OneContentFragment.getOneContentFragment("4"))
-                .add(OneContentFragment.getOneContentFragment("5"))
-                .set());
-        //顶部的或底部的渐变色去除
-        viewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        dragLayout.setDrag(true);
-                        break;
-                    default:
-                        //如果不在position 0  那么一定为关闭状态---防止用户快速滑动，出现界面展示bug
-                        dragClose();
-                        dragLayout.setDrag(false);
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         dragLayout.setPanelListener(new DragTopLayout.PanelListener() {
             @Override
@@ -197,5 +161,45 @@ public class OneFragmentView extends AppDelegate {
 
     public void onRefresh() {
         viewPager.setCurrentItem(0);
+    }
+
+    public void initViewpager(FragmentManager fragmentManager) {
+        viewPager.setPageTransformer(true, new VerticalStackTransformer());
+        viewPager.setAdapter(new ContentFragmentAdapter.Holder(fragmentManager)
+                .add(OneContentFragment.getOneContentFragment("1"))
+                .add(OneContentFragment.getOneContentFragment("2"))
+                .add(OneContentFragment.getOneContentFragment("3"))
+                .add(OneContentFragment.getOneContentFragment("4"))
+                .add(OneContentFragment.getOneContentFragment("5"))
+                .set());
+
+        //顶部的或底部的渐变色去除
+        viewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        dragLayout.setDrag(true);
+                        break;
+                    default:
+                        //如果不在position 0  那么一定为关闭状态---防止用户快速滑动，出现界面展示bug
+                        dragClose();
+                        dragLayout.setDrag(false);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 }

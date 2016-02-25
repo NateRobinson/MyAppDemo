@@ -3,13 +3,9 @@ package com.gu.myapp.ui.frgment.p.home;
 import android.view.View;
 
 import com.gu.baselibrary.baseui.presenter.BaseFragmentPresenter;
-import com.gu.baselibrary.baseui.view.AppDelegate;
 import com.gu.baselibrary.view.MyPagerGalleryView;
 import com.gu.myapp.R;
 import com.gu.myapp.ui.frgment.v.home.OneFragmentView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by guxuewu on 2016/2/19.
@@ -83,5 +79,7 @@ public class OneFragment extends BaseFragmentPresenter<OneFragmentView> {
                 }
             }
         }, R.id.refresh_iv, R.id.mail_iv, R.id.title_rl);
+
+        viewDelegate.initViewpager(getChildFragmentManager());
     }
 }
