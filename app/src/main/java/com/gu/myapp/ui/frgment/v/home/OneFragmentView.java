@@ -1,30 +1,24 @@
 package com.gu.myapp.ui.frgment.v.home;
 
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gu.baselibrary.baseui.view.AppDelegate;
-import com.gu.baselibrary.utils.LogUtils;
-import com.gu.baselibrary.view.FixedSpeedScroller;
 import com.gu.baselibrary.view.MyPagerGalleryView;
 import com.gu.baselibrary.view.dragtoplayout.DragTopLayout;
-import com.gu.baselibrary.view.verticalviewpager.StackTransformer;
+import com.gu.baselibrary.view.verticalviewpager.VerticalViewPager;
+import com.gu.baselibrary.view.verticalviewpager.VerticalStackTransformer;
 import com.gu.myapp.R;
 import com.gu.myapp.ui.activity.p.home.HomeActivity;
 import com.gu.myapp.ui.adapter.ContentFragmentAdapter;
 import com.gu.myapp.ui.frgment.p.home.OneContentFragment;
 import com.nineoldandroids.view.ViewHelper;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +28,7 @@ import java.util.List;
  */
 public class OneFragmentView extends AppDelegate {
     private DragTopLayout dragLayout;
-    private ViewPager viewPager;
+    private VerticalViewPager viewPager;
     private View titleBgView;
     private RelativeLayout top_view;
     private ImageView refresh_iv;
@@ -87,7 +81,7 @@ public class OneFragmentView extends AppDelegate {
 
         initTitleBg();
 
-        viewPager.setPageTransformer(true, new StackTransformer());
+        viewPager.setPageTransformer(true, new VerticalStackTransformer());
         viewPager.setAdapter(new ContentFragmentAdapter.Holder(((HomeActivity) getActivity()).getSupportFragmentManager())
                 .add(OneContentFragment.getOneContentFragment("1"))
                 .add(OneContentFragment.getOneContentFragment("2"))
