@@ -4,11 +4,15 @@ import com.gu.baselibrary.baseui.presenter.BaseFragmentPresenter;
 import com.gu.myapp.ui.frgment.v.home.MediaFragmentView;
 import com.gu.myapp.ui.frgment.v.home.TopicFragmentView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by guxuewu on 2016/2/26.
  * 第二个fragment - 话题 fragment
  */
 public class TopicFragment extends BaseFragmentPresenter<TopicFragmentView> {
+    private List<String> datas=new ArrayList<>();
     @Override
     protected Class<TopicFragmentView> getDelegateClass() {
         return TopicFragmentView.class;
@@ -51,6 +55,9 @@ public class TopicFragment extends BaseFragmentPresenter<TopicFragmentView> {
      */
     @Override
     protected void initViewsAndEvents() {
-
+        for(int i=0;i<3;i++){
+            datas.add("");
+        }
+        viewDelegate.setStrs(datas);
     }
 }

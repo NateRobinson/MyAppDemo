@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/test02" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextView14_balck"
+            android:paddingLeft="@dimen/left_margin_normal"
+            android:text="四六级"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/TextView12_black"
+            android:paddingLeft="@dimen/left_margin_normal"
+            android:text="第六感等级考试也~"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>
