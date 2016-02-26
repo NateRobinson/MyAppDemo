@@ -3,6 +3,7 @@ package com.gu.myapp.ui.frgment.p.home;
 import android.os.Bundle;
 
 import com.gu.baselibrary.baseui.presenter.BaseFragmentPresenter;
+import com.gu.baselibrary.utils.LogUtils;
 import com.gu.myapp.ui.frgment.v.home.OneContentFragmentView;
 
 /**
@@ -64,6 +65,7 @@ public class OneContentFragment extends BaseFragmentPresenter<OneContentFragment
     }
 
     public String getTitle() {
+        LogUtils.e(TAG_LOG, "num==>" + getArguments().getString("num"));
         return getArguments().getString("num");
     }
 }

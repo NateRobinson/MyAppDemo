@@ -1392,7 +1392,6 @@ public class VerticalViewPager extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final int count = getChildCount();
-        LogUtils.e(TAG,"pageSize===>"+count);
         int width = r - l;
         int height = b - t;
         int paddingLeft = getPaddingLeft();

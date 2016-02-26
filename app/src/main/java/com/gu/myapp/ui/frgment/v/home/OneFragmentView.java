@@ -1,5 +1,6 @@
 package com.gu.myapp.ui.frgment.v.home;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gu.baselibrary.baseui.view.AppDelegate;
+import com.gu.baselibrary.utils.LogUtils;
 import com.gu.baselibrary.view.MyPagerGalleryView;
 import com.gu.baselibrary.view.dragtoplayout.DragTopLayout;
 import com.gu.baselibrary.view.verticalviewpager.VerticalStackTransformer;
@@ -36,6 +38,9 @@ public class OneFragmentView extends AppDelegate {
     private TextView title_tv;
     private MyPagerGalleryView pagerGalleryView;
     private LinearLayout homeAdOvalLl;
+    private int totalSize = 0;
+    private ContentFragmentAdapter contentFragmentAdapter = null;
+    private List<Fragment> fragments = new ArrayList<>();
     /**
      * 图片id的数组,本地测试用
      */
@@ -159,20 +164,34 @@ public class OneFragmentView extends AppDelegate {
         pagerGalleryView.setMyOnItemClickListener(listener);
     }
 
+    /**
+     * 清楚
+     */
     public void onRefresh() {
         viewPager.setCurrentItem(0);
+        fragments.clear();
+        fragments.add(OneContentFragment.getOneContentFragment("1"));
+        fragments.add(OneContentFragment.getOneContentFragment("2"));
+        fragments.add(OneContentFragment.getOneContentFragment("3"));
+        fragments.add(OneContentFragment.getOneContentFragment("4"));
+        fragments.add(OneContentFragment.getOneContentFragment("5"));
+        totalSize = fragments.size();
+        contentFragmentAdapter.notifyDataSetChanged();
     }
 
     public void initViewpager(FragmentManager fragmentManager) {
         viewPager.setPageTransformer(true, new VerticalStackTransformer());
-        viewPager.setAdapter(new ContentFragmentAdapter.Holder(fragmentManager)
-                .add(OneContentFragment.getOneContentFragment("1"))
-                .add(OneContentFragment.getOneContentFragment("2"))
-                .add(OneContentFragment.getOneContentFragment("3"))
-                .add(OneContentFragment.getOneContentFragment("4"))
-                .add(OneContentFragment.getOneContentFragment("5"))
-                .set());
 
+        fragments.add(OneContentFragment.getOneContentFragment("1"));
+        fragments.add(OneContentFragment.getOneContentFragment("2"));
+        fragments.add(OneContentFragment.getOneContentFragment("3"));
+        fragments.add(OneContentFragment.getOneContentFragment("4"));
+        fragments.add(OneContentFragment.getOneContentFragment("5"));
+        contentFragmentAdapter = new ContentFragmentAdapter(fragmentManager, fragments);
+
+        viewPager.setAdapter(contentFragmentAdapter);
+
+        totalSize = fragments.size();
         //顶部的或底部的渐变色去除
         viewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -185,13 +204,25 @@ public class OneFragmentView extends AppDelegate {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
+                        pagerGalleryView.startTimer();
                         dragLayout.setDrag(true);
                         break;
                     default:
+                        pagerGalleryView.stopTimer();
                         //如果不在position 0  那么一定为关闭状态---防止用户快速滑动，出现界面展示bug
                         dragClose();
                         dragLayout.setDrag(false);
                         break;
+                }
+
+                //动态加载更多的fragments
+                if (position + 2 == totalSize) {
+                    LogUtils.e(TAG, "totalsize==>" + totalSize + "===position=>" + position);
+                    for (int i = 0; i < 5; i++) {
+                        fragments.add(OneContentFragment.getOneContentFragment((totalSize + 1 + i) + ""));
+                    }
+                    totalSize = fragments.size();
+                    contentFragmentAdapter.notifyDataSetChanged();
                 }
             }
 
