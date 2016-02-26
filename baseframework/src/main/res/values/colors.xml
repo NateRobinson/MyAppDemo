@@ -5,9 +5,4 @@
     <color name="transparent">#00000000</color>
     <color name="tab_text_normal">#4E4E4E</color>
     <color name="tab_text_selected">#F67B0E</color>
-
-    <color name="point_one">#FF634C</color>
-    <color name="point_two">#FCCA51</color>
-    <color name="point_three">#3EDE7A</color>
-    <color name="point_four">#01BEFF</color>
 </resources>

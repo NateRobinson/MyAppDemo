@@ -39,7 +39,7 @@ public class OneFragmentView extends AppDelegate {
     /**
      * 图片id的数组,本地测试用
      */
-    private int[] imageId = new int[]{R.mipmap.test01, R.mipmap.test02, R.mipmap.test03};
+    private int[] imageId = new int[]{R.mipmap.test01, R.mipmap.test02, R.mipmap.test03, R.mipmap.test04};
 
     /**
      * 图片网络路径数组

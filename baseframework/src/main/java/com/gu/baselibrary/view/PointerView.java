@@ -2,36 +2,75 @@ package com.gu.baselibrary.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-
-import com.gu.baselibrary.R;
 
 /**
  * Created by guxuewu on 2016/2/25.
  */
 public class PointerView extends View {
 
-    private int[] colors = new int[]{R.color.point_one, R.color.point_two, R.color.point_three, R.color.point_four};
-
-    private int mHeight;
-    private int mWidth;
-
     private int index = 0;
     private boolean selected = false;
+    private Paint outPaint;
+    private Paint inPaint;
 
+
+    public PointerView(Context context, int index) {
+        super(context);
+        this.index = index;
+        init();
+    }
 
     public PointerView(Context context) {
         super(context);
+        init();
     }
 
     public PointerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public PointerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init() {
+        outPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        outPaint.setStrokeWidth(2);
+        outPaint.setAntiAlias(true);
+        outPaint.setStyle(Paint.Style.STROKE);//设置空心
+
+        inPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        inPaint.setAntiAlias(true);
+        inPaint.setStyle(Paint.Style.FILL);//设置实心
+
+        switch (index % 4) {
+            case 0:
+                outPaint.setColor(Color.rgb(255, 99, 76));
+                inPaint.setColor(Color.rgb(255, 99, 76));
+                break;
+            case 1:
+                outPaint.setColor(Color.rgb(252, 202, 81));
+                inPaint.setColor(Color.rgb(252, 202, 81));
+                break;
+            case 2:
+                outPaint.setColor(Color.rgb(63, 222, 122));
+                inPaint.setColor(Color.rgb(63, 222, 122));
+                break;
+            case 3:
+                outPaint.setColor(Color.rgb(1, 190, 255));
+                inPaint.setColor(Color.rgb(1, 190, 255));
+                break;
+            default:
+                outPaint.setColor(Color.rgb(255, 99, 76));
+                inPaint.setColor(Color.rgb(255, 99, 76));
+                break;
+        }
     }
 
     @Override
@@ -42,45 +81,22 @@ public class PointerView extends View {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mHeight = getHeight();
-        mWidth = getWidth();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        // 创建画笔
-        Paint p = new Paint();
-        p.setStrokeWidth(5);
-        p.setColor(colors[index]);
-        p.setAntiAlias(true);// 设置画笔的锯齿效果。 true是去除，大家一看效果就明白了
-        p.setStyle(Paint.Style.STROKE);//设置空心
-        canvas.drawCircle(getWidth() / 2, getHeight() / 2, 10, p);// 小圆
-
+        canvas.drawCircle(getWidth() / 2, getHeight() / 2, getHeight() / 5, inPaint);// 实心圆
         if (selected) {
             canvas.save();
-
-            Paint p2 = new Paint();
-            p2.setAntiAlias(true);// 设置画笔的锯齿效果。 true是去除，大家一看效果就明白了
-            p2.setColor(colors[index]);
-            p2.setStyle(Paint.Style.FILL);//设置空心
-            canvas.drawCircle(getWidth() / 2, getHeight() / 2, 5, p2);// 小圆
-
+            canvas.drawCircle(getWidth() / 2, getHeight() / 2, getHeight() / 3, outPaint);// 圆圈
             canvas.restore();
         }
-
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-        requestLayout();
-        postInvalidate();
     }
 
     @Override
     public void setSelected(boolean selected) {
         this.selected = selected;
-        requestLayout();
-        postInvalidate();
+        invalidate();
     }
 }

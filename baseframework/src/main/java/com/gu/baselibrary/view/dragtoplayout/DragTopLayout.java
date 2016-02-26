@@ -49,6 +49,7 @@ public class DragTopLayout extends FrameLayout {
     private float ratio;
     private boolean isRefreshing;
     private boolean shouldIntercept = true;
+    private int topDistance;
 
     private PanelListener panelListener;
     private float refreshRatio = 1.5f;
@@ -117,6 +118,7 @@ public class DragTopLayout extends FrameLayout {
         topViewId = a.getResourceId(R.styleable.DragTopLayout_dtlTopView, -1);
         initOpen(a.getBoolean(R.styleable.DragTopLayout_dtlOpen, true));
         captureTop = a.getBoolean(R.styleable.DragTopLayout_dtlCaptureTop, false);
+        topDistance = a.getInt(R.styleable.DragTopLayout_topDistance, 250);
         a.recycle();
     }
 
@@ -137,7 +139,7 @@ public class DragTopLayout extends FrameLayout {
     public void onFinishInflate() {
         super.onFinishInflate();
         //初始化contenttop的高度
-        contentTop = ScreenUtils.dp2px(getContext(), 250);
+        contentTop = ScreenUtils.dp2px(getContext(), topDistance);
         if (getChildCount() < 2) {
             throw new RuntimeException("Content view must contains two child views at least.");
         }
@@ -266,7 +268,7 @@ public class DragTopLayout extends FrameLayout {
     private void updatePanelState() {
         if (contentTop <= getPaddingTop() + collapseOffset + ScreenUtils.dp2px(getContext(), 60)) {
             panelState = PanelState.COLLAPSED;
-        } else if (contentTop >= ScreenUtils.dp2px(getContext(), 250)) {
+        } else if (contentTop >= ScreenUtils.dp2px(getContext(), topDistance)) {
             panelState = PanelState.EXPANDED;
         } else {
             panelState = PanelState.SLIDING;
@@ -365,7 +367,7 @@ public class DragTopLayout extends FrameLayout {
                         return Math.max(top, getPaddingTop() + collapseOffset);
                     } else {
                         //我使用到的是这个
-                        return Math.min(ScreenUtils.dp2px(getContext(), 250), Math.max(top, getPaddingTop() + collapseOffset));
+                        return Math.min(ScreenUtils.dp2px(getContext(), topDistance), Math.max(top, getPaddingTop() + collapseOffset));
                     }
                 } else {
                     return ScreenUtils.dp2px(getContext(), 54);
@@ -389,11 +391,11 @@ public class DragTopLayout extends FrameLayout {
             if (isDrag && contentTop > ScreenUtils.dp2px(getContext(), 54)) {
                 // yvel > 0 Fling down || yvel < 0 Fling up
                 int top;
-                if (yvel > 0 || contentTop > ScreenUtils.dp2px(getContext(), 250)) {
+                if (yvel > 0 || contentTop > ScreenUtils.dp2px(getContext(), topDistance)) {
                     if (panelListener != null) {
                         panelListener.onPanelStateChanged(PanelState.EXPANDED);
                     }
-                    top = ScreenUtils.dp2px(getContext(), 250) + getPaddingTop();
+                    top = ScreenUtils.dp2px(getContext(), topDistance) + getPaddingTop();
                 } else {
                     if (panelListener != null) {
                         panelListener.onPanelStateChanged(PanelState.COLLAPSED);

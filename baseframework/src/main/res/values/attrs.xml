@@ -30,5 +30,7 @@
         <attr name="dtlDragContentView" format="reference" />
         <!-- True the top view can be dragged -->
         <attr name="dtlCaptureTop" format="boolean" />
+        <!-- content内容距离顶部的距离-->
+        <attr name="topDistance" format="integer" />
     </declare-styleable>
 </resources>

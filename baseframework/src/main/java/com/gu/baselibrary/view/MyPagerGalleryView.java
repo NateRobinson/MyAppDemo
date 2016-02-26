@@ -163,22 +163,20 @@ public class MyPagerGalleryView extends Gallery
         } else if (mOvalLayout != null) {
             mOvalLayout.removeAllViews();
             // 圆点的大小是 圆点窗口的 70%;
-            int Ovalheight = (int) (mOvalLayout.getLayoutParams().height * 0.7);
+            int Ovalheight = (int) (mOvalLayout.getLayoutParams().height);
             // 圆点的左右外边距是 圆点窗口的 20%;
             int Ovalmargin = (int) (mOvalLayout.getLayoutParams().height * 0.2);
             android.widget.LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     Ovalheight, Ovalheight);
             layoutParams.setMargins(Ovalmargin, 0, Ovalmargin, 4);
             for (int i = 0; i < listImgs.size(); i++) {
-                PointerView v = new PointerView(mContext); // 员点
+                PointerView v = new PointerView(mContext, i); // 员点
                 v.setLayoutParams(layoutParams);
-                //v.setBackgroundResource(mNormalId);
-                v.setIndex(i);
                 v.setSelected(false);
                 mOvalLayout.addView(v);
             }
             // 选中第一个
-            ((PointerView)mOvalLayout.getChildAt(0)).setSelected(true);
+            mOvalLayout.getChildAt(0).setSelected(true);
         }
     }
 
