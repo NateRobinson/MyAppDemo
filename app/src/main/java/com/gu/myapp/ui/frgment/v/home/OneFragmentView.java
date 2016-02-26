@@ -143,7 +143,7 @@ public class OneFragmentView extends AppDelegate {
         ViewHelper.setAlpha(top_view, 0);
         refresh_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
         mail_iv.setColorFilter(getActivity().getResources().getColor(R.color.black_txt));
-        title_tv.setTextColor(getActivity().getResources().getColor(R.color.red));
+        title_tv.setTextColor(getActivity().getResources().getColor(R.color.one_bg));
     }
 
     /**

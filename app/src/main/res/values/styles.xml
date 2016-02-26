@@ -97,13 +97,13 @@
 
     <!-- 自定义Design样式-->
     <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/green</item>
+        <item name="tabIndicatorColor">@color/two_bg</item>
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabPaddingStart">12dp</item>
         <item name="tabPaddingEnd">12dp</item>
         <item name="tabBackground">@color/white</item>
         <item name="tabTextAppearance">@style/CustomTabTextAppearance</item>
-        <item name="tabSelectedTextColor">@color/green</item>
+        <item name="tabSelectedTextColor">@color/two_bg</item>
     </style>
     <!-- 自定义Design样式tab字体样式-->
     <style name="CustomTabTextAppearance" parent="TextAppearance.Design.Tab">
