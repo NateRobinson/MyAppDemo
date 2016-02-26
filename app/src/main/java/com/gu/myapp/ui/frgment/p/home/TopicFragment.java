@@ -1,19 +1,17 @@
 package com.gu.myapp.ui.frgment.p.home;
 
 import com.gu.baselibrary.baseui.presenter.BaseFragmentPresenter;
-import com.gu.myapp.ui.frgment.v.home.TwoFragmentView;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.gu.myapp.ui.frgment.v.home.MediaFragmentView;
+import com.gu.myapp.ui.frgment.v.home.TopicFragmentView;
 
 /**
- * Created by guxuewu on 2016/2/19.
- * 首页第二个 碎片
+ * Created by guxuewu on 2016/2/26.
+ * 第二个fragment - 话题 fragment
  */
-public class TwoFragment extends BaseFragmentPresenter<TwoFragmentView> {
+public class TopicFragment extends BaseFragmentPresenter<TopicFragmentView> {
     @Override
-    protected Class getDelegateClass() {
-        return TwoFragmentView.class;
+    protected Class<TopicFragmentView> getDelegateClass() {
+        return TopicFragmentView.class;
     }
 
     /**
@@ -53,6 +51,6 @@ public class TwoFragment extends BaseFragmentPresenter<TwoFragmentView> {
      */
     @Override
     protected void initViewsAndEvents() {
-        viewDelegate.initViewPager(getChildFragmentManager());
+
     }
 }
