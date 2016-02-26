@@ -55,7 +55,7 @@ public class TopicFragment extends BaseFragmentPresenter<TopicFragmentView> {
      */
     @Override
     protected void initViewsAndEvents() {
-        for(int i=0;i<3;i++){
+        for(int i=0;i<4;i++){
             datas.add("");
         }
         viewDelegate.setStrs(datas);
