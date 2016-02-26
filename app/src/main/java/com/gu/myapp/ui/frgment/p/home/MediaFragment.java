@@ -3,11 +3,15 @@ package com.gu.myapp.ui.frgment.p.home;
 import com.gu.baselibrary.baseui.presenter.BaseFragmentPresenter;
 import com.gu.myapp.ui.frgment.v.home.MediaFragmentView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by guxuewu on 2016/2/26.
  * 第二个fragment - 媒体 fragment
  */
 public class MediaFragment extends BaseFragmentPresenter<MediaFragmentView> {
+    private List<String> datas=new ArrayList<>();
     @Override
     protected Class<MediaFragmentView> getDelegateClass() {
         return MediaFragmentView.class;
@@ -50,6 +54,9 @@ public class MediaFragment extends BaseFragmentPresenter<MediaFragmentView> {
      */
     @Override
     protected void initViewsAndEvents() {
-
+        for(int i=0;i<6;i++){
+            datas.add("");
+        }
+        viewDelegate.setStrs(datas);
     }
 }
