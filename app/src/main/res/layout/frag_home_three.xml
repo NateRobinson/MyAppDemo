@@ -4,10 +4,155 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="three"
-        android:textSize="30sp" />
+        android:layout_height="54dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextView22_balck"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="编辑"
+            android:textColor="@color/three_bg" />
+
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/right_margin_big"
+            android:src="@mipmap/mail_icon"
+            android:tint="@color/black_txt" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/grey_mid">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="@dimen/bottom_margin_normal"
+                android:layout_marginLeft="@dimen/left_margin_big"
+                android:layout_marginRight="@dimen/right_margin_big"
+                android:layout_marginTop="@dimen/top_margin_normal"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="@dimen/left_margin_normal"
+                    android:src="@mipmap/search_icon"
+                    android:tint="@color/three_bg" />
+
+                <EditText
+                    style="@style/TextView14_balck"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/left_margin_normal"
+                    android:layout_marginRight="@dimen/right_margin_normal"
+                    android:background="@color/white"
+                    android:hint="搜索你想看的内容"
+                    android:textColorHint="@color/grey_a4a4a4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/left_margin_big"
+                    android:layout_marginRight="@dimen/right_margin_big"
+                    android:layout_weight="1"
+                    android:background="@color/grey_a4a4a4" />
+
+                <TextView
+                    style="@style/TextView14_gray"
+                    android:text="编辑" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/left_margin_big"
+                    android:layout_marginRight="@dimen/right_margin_big"
+                    android:layout_weight="1"
+                    android:background="@color/grey_a4a4a4" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/left_margin_big"
+                    android:layout_marginRight="@dimen/right_margin_big"
+                    android:layout_weight="1"
+                    android:background="@color/grey_a4a4a4" />
+
+                <TextView
+                    style="@style/TextView14_gray"
+                    android:text="分类" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/left_margin_big"
+                    android:layout_marginRight="@dimen/right_margin_big"
+                    android:layout_weight="1"
+                    android:background="@color/grey_a4a4a4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/left_margin_big"
+                    android:layout_marginRight="@dimen/right_margin_big"
+                    android:layout_weight="1"
+                    android:background="@color/grey_a4a4a4" />
+
+                <TextView
+                    style="@style/TextView14_gray"
+                    android:text="NEXT精选" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/left_margin_big"
+                    android:layout_marginRight="@dimen/right_margin_big"
+                    android:layout_weight="1"
+                    android:background="@color/grey_a4a4a4" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>
